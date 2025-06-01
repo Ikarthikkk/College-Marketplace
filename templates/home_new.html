@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>College Marketplace</title>
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Poppins:400,700|Raleway:400,700&display=swap" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent scrolling */
+    }
+    body {
+      min-height: 100vh;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+    }
+    .main {
+      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #hero {
+      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .video-background {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
+      z-index: 1;
+    }
+    .hero-container {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+    }
+    .btn-lg {
+      min-width: 180px;
+    }
+    @media (max-width: 768px) {
+      .display-4 { font-size: 2rem; }
+      .btn-lg { min-width: 120px; font-size: 1rem; }
+    }
+    .made-by-karthik {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      color: #fff;
+      font-size: 1.1rem;
+      opacity: 0.85;
+      letter-spacing: 0.03em;
+      z-index: 3;
+      background: none;
+      padding: 0;
+      margin: 0;
+      font-weight: 500;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="index-page">
+
+  <!-- Navigation Bar -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="{{ url_for('home') }}" class="logo d-flex align-items-center">
+        <i class="bi bi-shop"></i>
+        <h1 class="sitename">College Marketplace</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ url_for('profile') }}">My Profile</a></li>
+          <li><a href="{{ url_for('post_product') }}">Post a Product for Sale</a></li>
+          <li><a href="{{ url_for('products') }}">Browse Products</a></li>
+          <li><a href="{{ url_for('my_orders') }}">My Orders</a></li>
+          <li><a href="{{ url_for('wishlist') }}">View Wishlist</a></li>
+          {% if session.get('user_name') %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ session['user_name'] }}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+              </ul>
+            </li>
+          {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+          {% endif %}
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section with Video Background -->
+  <main class="main">
+    <section id="hero" class="hero section dark-background">
+      <video autoplay muted loop playsinline class="video-background">
+        <source src="{{ url_for('static', filename='assets/img/education/video-2.mp4') }}" type="video/mp4">
+      </video>
+      <div class="overlay"></div>
+      <div class="container hero-container">
+        <div class="hero-content">
+          <h1 class="display-4 fw-bold text-white">Buy, Sell, and Connect on Your Campus Marketplace</h1>
+          <p class="lead text-white-50 mb-4">Welcome to College Marketplace. Buy and sell products, or find what you need from your campus community.</p>
+          <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('products') }}" class="btn btn-success btn-lg">Browse Products</a>
+            <a href="{{ url_for('post_product') }}" class="btn btn-outline-light btn-lg">Post a Product</a>
+          </div>
+        </div>
+        <!-- Made by Karthik text, bottom-left -->
+        <div class="made-by-karthik">Made by Karthik|Kaustubh|Moksh|Sagar</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+</html>
+
+

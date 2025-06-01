@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Order - College Marketplace</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .order-summary { margin-bottom: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h2>Order Summary</h2>
+    <div class="order-summary">
+        <table>
+            <tr><th>Name</th><th>Price</th></tr>
+            {% for p in products %}
+                <tr>
+                    <td>{{ p[1] }}</td>
+                    <td>₹{{ p[2] }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>Total</th>
+                <th>₹{{ total_price }}</th>
+            </tr>
+        </table>
+    </div>
+    <form method="POST">
+        <label><input type="radio" name="order_type" value="center" required> Drop at CollegeMarketplace center (cash)</label><br>
+        <label><input type="radio" name="order_type" value="pickup" required> Request for pickup (cash on pickup)</label><br><br>
+        <button type="submit">Place Order</button>
+    </form>
+    <p><a href="/products">Back to Products</a></p>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile - College Marketplace</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h2 { margin-top: 30px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f0f0f0; }
+        img { max-width: 80px; max-height: 80px; }
+        a { color: #2980b9; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .action-links a, .action-links form { display: inline; margin-right: 10px; }
+        .action-links button { color: red; background: none; border: none; cursor: pointer; font-size: 16px; }
+        .wishlist-actions { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>My Profile</h1>
+    <p><a href="/">Back to Home</a></p>
+
+    <h2>My Posted Products</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+        {% for p in my_products %}
+        <tr>
+            <td>{{ p[1] }}</td>
+            <td>{{ p[2] }}</td>
+            <td>₹{{ p[3] }}</td>
+            <td>{{ p[4] }}</td>
+            <td>{% if p[5] %}Sold{% else %}Available{% endif %}</td>
+            <td>
+                {% if p[6] %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ p[6]) }}" alt="Product Image">
+                {% else %}
+                    No image
+                {% endif %}
+            </td>
+            <td class="action-links">
+                <a href="{{ url_for('edit_product', product_id=p[0]) }}">Edit</a>
+                <form method="POST" action="{{ url_for('delete_product', product_id=p[0]) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>My Wishlist</h2>
+    {% if wishlist_products %}
+    <form method="GET" action="/wishlist" class="wishlist-actions">
+        <button type="submit">Go to Wishlist to Place Order</button>
+    </form>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Image</th>
+        </tr>
+        {% for item in wishlist_products %}
+        <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>₹{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>
+                {% if item[4] %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ item[4]) }}" alt="Product Image">
+                {% else %}
+                    No image
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>Your wishlist is empty.</p>
+    {% endif %}
+</body>
+</html>
+

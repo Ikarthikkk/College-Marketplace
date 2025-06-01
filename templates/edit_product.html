@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product - College Marketplace</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        form { max-width: 400px; margin: auto; }
+        input, textarea, select, button { width: 100%; margin: 8px 0; padding: 8px; }
+        img { max-width: 80px; max-height: 80px; display: block; margin: 10px 0; }
+        ul { list-style: none; padding: 0; }
+        a { color: #2980b9; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li style="color: {% if category == 'success' %}green{% else %}red{% endif %};">
+              {{ message }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h2>Edit Product</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Product Name" value="{{ product[1] }}" required>
+        <select name="category" required>
+            <option value="">Select Category</option>
+            <option value="Books" {% if product[2]=='Books' %}selected{% endif %}>Books</option>
+            <option value="Electronics" {% if product[2]=='Electronics' %}selected{% endif %}>Electronics</option>
+            <option value="Furniture" {% if product[2]=='Furniture' %}selected{% endif %}>Furniture</option>
+            <option value="Hostel Stuff" {% if product[2]=='Hostel Stuff' %}selected{% endif %}>Hostel Stuff</option>
+            <option value="Notes" {% if product[2]=='Notes' %}selected{% endif %}>Notes</option>
+            <option value="Stationary" {% if product[2]=='Stationary' %}selected{% endif %}>Stationary</option>
+            <option value="Utensils" {% if product[2]=='Utensils' %}selected{% endif %}>Utensils</option>
+            <option value="Sports Items" {% if product[2]=='Sports Items' %}selected{% endif %}>Sports Items</option>
+            <option value="Other" {% if product[2]=='Other' %}selected{% endif %}>Other</option>
+        </select>
+        <input type="number" step="0.01" name="price" placeholder="Price" value="{{ product[3] }}" required>
+        <textarea name="description" placeholder="Description">{{ product[4] }}</textarea>
+        {% if product[5] %}
+            <img src="{{ url_for('static', filename='uploads/' ~ product[5]) }}" alt="Product Image">
+        {% endif %}
+        <input type="file" name="image" accept="image/*">
+        <button type="submit">Update Product</button>
+    </form>
+    <p><a href="/profile">Back to Profile</a></p>
+</body>
+</html>
